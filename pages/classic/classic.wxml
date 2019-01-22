@@ -1,0 +1,15 @@
+<view class="container">
+    <view class="header">
+        <c-periodical class="periodical" index="{{classicData.index}}" />
+        <view class='like-container'>
+            <c-like class="like" bind:like="onLike" like="{{likeStatus}}" count="{{likeCount}}" />
+            <c-button open-type="share" class="share-btn">
+                <image class="share" src="/images/icon/share.png" slot="image" />
+            </c-button>
+        </view>
+    </view>
+    <c-movie hidden="{{classicData.type!=100}}" img="{{classicData.image}}" content="{{classicData.content}}" />
+    <c-music wx:if="{{classicData.type==200}}" img="{{classicData.image}}" content="{{classicData.content}}" audioSrc="{{classicData.url}}" audioName="{{classicData.title}}" />
+    <c-essay hidden="{{classicData.type!=300}}" img="{{classicData.image}}" content="{{classicData.content}}" />
+    <c-navi class="navi" bind:left="onNext" bind:right="onPrevious" title="{{classicData.title}}" first="{{first}}" latest="{{latest}}" />
+</view>

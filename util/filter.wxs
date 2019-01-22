@@ -1,0 +1,24 @@
+/**
+ * 格式化代码
+ * @returns {String} 
+ * @param {String} text 
+ */
+var format = function (text) {
+    var reg = getRegExp('\\\\n', 'g')
+    return text.replace(reg, '\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+}
+
+/**
+ * 获取数组中的一部分
+ * @param {Array} arr
+ * @param {Number} end
+ * @param {Number} start  可以不传, 默认为0
+ */
+var limit = function (arr, end, start = 0) {
+    return arr.slice(start, end)
+}
+
+module.exports = {
+    format: format,
+    limit: limit
+}

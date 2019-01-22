@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "c-button": "/components/image-button/index",
+    "c-preview": "/components/preview/index"
+  }
+}

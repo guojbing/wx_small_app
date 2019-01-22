@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "c-tag": "/components/tag/index",
+    "c-like": "/components/like/index",
+    "c-mask": "/components/mask/index",
+    "c-button": "/components/image-button/index"
+  }
+}

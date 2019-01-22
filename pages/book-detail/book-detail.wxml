@@ -1,0 +1,73 @@
+<wxs src="../../util/filter.wxs" module="util" />
+<view class="container">
+    <view class="head">
+        <image src="{{book.image}}"></image>
+        <text class='title'>{{book.title}}</text>
+        <text class='author'>{{book.author}}</text>
+    </view>
+    <view class="sub-container">
+        <text class="headline">短评</text>
+        <view class="comment-container">
+            <text class="shadow" wx:if="{{flag}}">没有短评信息</text>
+            <block wx:for="{{util.limit(comments, 7)}}" wx:key="content">
+                <c-tag text="{{item.content}}">
+                    <text class="comment-num-slot" slot="after">{{'+'+item.nums}}</text>
+                </c-tag>
+            </block>
+        </view>
+    </view>
+    <view class="sub-container">
+        <text class="headline">内容简介</text>
+        <text class="content" decode="{{true}}">{{util.format(book.summary)}}</text>
+    </view>
+    <view class="sub-container">
+        <text class="headline">书本信息</text>
+        <view class="detail-container">
+            <view class="vertical description">
+                <text>出版社</text>
+                <text>出版年</text>
+                <text>页数</text>
+                <text>定价</text>
+                <text>装帧</text>
+            </view>
+            <view class="vertical">
+                <text>{{book.publisher}}</text>
+                <text>{{book.pubdate}}</text>
+                <text>{{book.pages}}</text>
+                <text>{{book.price}}</text>
+                <text>{{book.binding}}</text>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="post-container" wx:if="{{!posting}}">
+    <view class="post-fake" bind:tap="onShowPostContainer">
+        <text>输入短评</text>
+    </view>
+    <view class="like-container">
+        <c-like bind:like="onLike" class="like" like="{{likeStatus}}" count="{{likeCount}}" />
+        <c-button open-type="share" class="share-btn">
+            <image class="share" src="/images/icon/share.png" slot="image" />
+        </c-button>
+    </view>
+</view>
+<view class="posting-container" wx:if="{{posting}}">
+    <view class="post-header">
+        <text wx:if="{{comments.length > 0}}">仅可点击标签+1</text>
+        <text wx:else>暂无短评</text>
+        <text bind:tap="onCancel" class="cancel">取消</text>
+    </view>
+    <view class="comment-container">
+        <block wx:for="{{util.limit(comments, 3)}}" wx:key="content">
+            <c-tag bind:addComment="onPostComment" text="{{item.content}}">
+                <text class="num" slot="after">{{'+'+item.nums}}</text>
+            </c-tag>
+        </block>
+    </view>
+    <input bind:confirm="onPostComment" auto-focus="{{true}}" class="post" placeholder='短评最多12个字' />
+</view>
+<!-- 遮罩层
+    需求: 当用户点击遮罩层时,应该取消遮罩层和真实评论输入框的显示
+    bind:cancelShow="onCancelShow"  监听子组件的自定义事件cancelShow (当遮罩层被用户点击时触发该事件)
+    该事件触发时,就证明用户点击了遮罩层 ,此时需要在onCancelShow事件函数中,将posting的值改为false -->
+<c-mask isShow="{{posting}}" bind:cancelShow="onCancelShow" />
